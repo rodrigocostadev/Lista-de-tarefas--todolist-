@@ -1,0 +1,12 @@
+body{
+    text-align: center;
+}
+li{
+    display: inline-block;
+    background-color: aqua;
+    
+}
+#listaelementos{
+    list-style: none;
+    /* max-width: 100px; */
+}
