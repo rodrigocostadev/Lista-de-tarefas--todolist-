@@ -53,10 +53,15 @@ onload = function atualizar1 (){
             if(listaindex == botaoclicado){
 
                 let divapagada = document.getElementById(listaindex)
-                
                 let lista = document.querySelector("#listaelementos")
+                // let elementosdiv = document.querySelectorAll(".elementos")
+                // let botaoeditar = document.getElementsByTagName("button")
+                // let botaoapagar = document.querySelectorAll(".apagar")
 
                 lista.removeChild(divapagada)
+                // elementosdiv.removeChild(divapagada)               
+                // document.querySelectorAll(".apagar").style.display = "none"
+                // botaoapagar.style.display = "none"
                 
                 // remove a string do array, 
                 //remove 1 elemento do índice da variavel listaindex, e adiciona null para nao perder a ordem do array
@@ -68,6 +73,16 @@ onload = function atualizar1 (){
 
                 console.log(listatarefas)
                 // console.log(listaindex)
+            }
+            else if (listaindex.length == null){
+                // let apagartudo = document.getElementById(listaindex)
+                let botaoeditar = document.querySelectorAll(".editar")
+                let botaoapagar = document.querySelectorAll(".apagar")
+
+                botaoeditar.style.display = "none"
+                botaoapagar.style.display = "none"
+                // apagartudo.style.display = "none"
+
             }
 
             
@@ -144,11 +159,7 @@ document.getElementById("botaocriar").addEventListener("click", function(){
                 console.log(listatarefas)
                 // console.log(listaindex)
             }
-            else if (listaindex == null){
-                let apagartudo = document.getElementById(listaindex)
-
-                apagartudo.style.display = "none"
-            }
+            
 
             
             
