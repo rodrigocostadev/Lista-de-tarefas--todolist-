@@ -1,26 +1,24 @@
 var listatarefas = [];
-
+var arraybotaoclicado = [];
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Local storage para carregar da memoria e adicionar atributos de acordo com o indice do array
 onload = function atualizar1 (){
-    var b = localStorage.getItem("buscarlista")
-    // console.log(b)
-    var c = JSON.parse(b)
+    var getlista = localStorage.getItem("buscarlista")
+    // console.log(getlista)
+    var listaLS = JSON.parse(getlista)
     let lista = document.getElementById("listaelementos")
-    // let listacompleta = document.getElementById("listacompleta")
-    // var div = document.createElement("div")
 
-    // console.log(c)
-    // console.log(c.length)
+    // console.log(listaLS)
+    // console.log(listaLS.length)
 
-    for ( var i = 0; i < c.length; i++){
-        // console.log(c[i])
+    for ( let i = 0; i < listaLS.length; i++){
+        // console.log(listaLS[i])
         var div = document.createElement("div")
         let apagar = document.createElement("button")
         let editar = document.createElement("button")
 
-        div.textContent = c[i]
+        div.textContent = listaLS[i]
         div.setAttribute("id", [i])
         div.setAttribute("class", "elementos")
         lista.append(div)
@@ -37,59 +35,22 @@ onload = function atualizar1 (){
               
     }
 
-    let classapagar = document.querySelectorAll(".apagar") //pega todos os botões apagar
-        classapagar.forEach(function(e){ // faz um for em todos os botoes apagar
-            e.addEventListener("click", functionapagar2 ) // adiciona o evento click em todos os botoes apagar
-        })
+    var getbotaoclicado = localStorage.getItem("buscarbotaoclicado")
+    var botaoclicadoLS = JSON.parse(getbotaoclicado)
+    // console.log(botaoclicadoLS)    
+    let botaoclicado = botaoclicadoLS       
 
-        function functionapagar2 (evento){
-            var botaoclicado = evento.target.id
-            var listaindex = listatarefas.indexOf(listatarefas[botaoclicado]) // pega o index da string clicada
-            // console.log(listatarefas[botaoclicado]) // pega a string clicada
+    // console.log(listaindex)
+    // console.log(botaoclicado)
 
-            // console.log(listaindex)
-            // console.log(botaoclicado)
-
-            if(listaindex == botaoclicado){
-
-                let divapagada = document.getElementById(listaindex)
-                let lista = document.querySelector("#listaelementos")
-                // let elementosdiv = document.querySelectorAll(".elementos")
-                // let botaoeditar = document.getElementsByTagName("button")
-                // let botaoapagar = document.querySelectorAll(".apagar")
-
-                lista.removeChild(divapagada)
-                // elementosdiv.removeChild(divapagada)               
-                // document.querySelectorAll(".apagar").style.display = "none"
-                // botaoapagar.style.display = "none"
-                
-                // remove a string do array, 
-                //remove 1 elemento do índice da variavel listaindex, e adiciona null para nao perder a ordem do array
-                listatarefas.splice(listaindex, 1, null) 
-                
-                //atualiza o array de acordo com as divs apagadas
-                var salvalista = JSON.stringify(listatarefas)
-                localStorage.setItem("buscarlista", salvalista)
-
-                console.log(listatarefas)
-                // console.log(listaindex)
-            }
-            else if (listaindex.length == null){
-                // let apagartudo = document.getElementById(listaindex)
-                let botaoeditar = document.querySelectorAll(".editar")
-                let botaoapagar = document.querySelectorAll(".apagar")
-
-                botaoeditar.style.display = "none"
-                botaoapagar.style.display = "none"
-                // apagartudo.style.display = "none"
-
-            }
-
-            
-            // console.log(listaindex)
-            
-        }
+    // faz com que as divs que foram apagadas anteriormente não apareçam
+    for ( let i = 0; i < botaoclicado.length; i++){
+        let divapagada = document.getElementById(botaoclicado[i])         
+        lista.removeChild(divapagada)
+    }
+                 //////////////////////FAZER BOTAO DE APAGAR FUNCIONAR///////////////////////////////////
 }
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -125,7 +86,7 @@ document.getElementById("botaocriar").addEventListener("click", function(){
             editar.setAttribute("id", [i])
         }
 
-
+        
         let classapagar = document.querySelectorAll(".apagar") //pega todos os botões apagar
         classapagar.forEach(function(e){ // faz um for em todos os botoes apagar
             e.addEventListener("click", functionapagar ) // adiciona o evento click em todos os botoes apagar
@@ -137,7 +98,7 @@ document.getElementById("botaocriar").addEventListener("click", function(){
             // console.log(listatarefas[botaoclicado]) // pega a string clicada
             var listaindex = listatarefas.indexOf(listatarefas[botaoclicado]) // pega o index da string clicada            
 
-            // console.log(listaindex)
+            console.log(listaindex)
             // console.log(botaoclicado)
 
             if(listaindex == botaoclicado){
@@ -156,7 +117,14 @@ document.getElementById("botaocriar").addEventListener("click", function(){
                 var salvalista = JSON.stringify(listatarefas)
                 localStorage.setItem("buscarlista", salvalista)
 
-                console.log(listatarefas)
+                // salva botões clicados para excluir as divs que foram clicadas na função onload
+                
+                arraybotaoclicado.push(botaoclicado)
+                // console.log(arraybotaoclicado)
+                var salvabotaoclicado = JSON.stringify(arraybotaoclicado)
+                localStorage.setItem("buscarbotaoclicado", salvabotaoclicado)
+
+                // console.log(listatarefas)
                 // console.log(listaindex)
             }
             
