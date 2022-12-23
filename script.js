@@ -2,16 +2,17 @@ var listatarefas = [];
 var arraybotaoclicado = [];
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//Local storage para carregar da memoria e adicionar atributos de acordo com o indice do array
+//////////////Carregar tarefas criadas de pagina que foi fechada com função onload///////////////////////////////////
 onload = function atualizar1 (){
+    //Local storage para carregar da memoria a pagina fechada e adicionar atributos de acordo com o indice do array//
     var getlista = localStorage.getItem("buscarlista")
-    // console.log(getlista)
     var listaLS = JSON.parse(getlista)
     let lista = document.getElementById("listaelementos")
-
+    // console.log(getlista)
     // console.log(listaLS)
     // console.log(listaLS.length)
 
+    /////Adicionando atributos com For/////
     for ( let i = 0; i < listaLS.length; i++){
         // console.log(listaLS[i])
         var div = document.createElement("div")
@@ -31,22 +32,53 @@ onload = function atualizar1 (){
         apagar.textContent = "Apagar"
         apagar.setAttribute("class", "apagar")
         apagar.setAttribute("id", [i])
-        div.append(apagar)  
-              
+        div.append(apagar)                
     }
 
     var getbotaoclicado = localStorage.getItem("buscarbotaoclicado")
-    var botaoclicadoLS = JSON.parse(getbotaoclicado)
-    // console.log(botaoclicadoLS)    
-    let botaoclicado = botaoclicadoLS       
+    var botaoclicadoLS = JSON.parse(getbotaoclicado) 
+    let botaoclicadocarregado = botaoclicadoLS       
 
     // console.log(listaindex)
-    // console.log(botaoclicado)
+    // console.log(botaoclicadocarregado)
 
     // faz com que as divs que foram apagadas anteriormente não apareçam
-    for ( let i = 0; i < botaoclicado.length; i++){
-        let divapagada = document.getElementById(botaoclicado[i])         
+    for ( let i = 0; i < botaoclicadocarregado.length; i++){                //PROBLEMA COM O 0. ESTA APAGANDO A 1 DIV CARREGADA
+        let divapagada = document.getElementById(botaoclicadocarregado[i])         
         lista.removeChild(divapagada)
+    }
+
+    let classapagar = document.querySelectorAll(".apagar")
+    classapagar.forEach(function(ev){
+        ev.addEventListener("click", fuctionapagar2)
+    })
+
+    function fuctionapagar2 (evento2) {
+
+        let botaoclicado2 = evento2.target.id
+        let listaindex2 = listaLS.indexOf(listaLS[botaoclicado2])
+        // console.log(listaindex2)
+        // console.log(botaoclicado2)
+        console.log(listaLS)
+
+    if ( listaindex2 == botaoclicado2 ){
+        let divapagada2 = document.getElementById(listaindex2)
+        let lista = document.querySelector("#listaelementos")
+
+        lista.removeChild(divapagada2)
+        listaLS.splice(listaindex2, 1 , null)
+        // console.log(listaLS)
+
+        let salvalista = JSON.stringify(listaLS)
+        localStorage.setItem("buscarlista", salvalista)
+
+        arraybotaoclicado.push(botaoclicado2)
+        let salvabotaoclicado2 = JSON.stringify(arraybotaoclicado)
+        localStorage.setItem("buscarbotaoclicado", salvabotaoclicado2)
+
+        }
+
+
     }
                  //////////////////////FAZER BOTAO DE APAGAR FUNCIONAR///////////////////////////////////
 }
