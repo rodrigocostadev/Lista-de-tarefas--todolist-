@@ -53,13 +53,15 @@ onload = function atualizar1 (){
         ev.addEventListener("click", fuctionapagar2)
     })
 
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
     function fuctionapagar2 (evento2) {
 
         let botaoclicado2 = evento2.target.id
         let listaindex2 = listaLS.indexOf(listaLS[botaoclicado2])
         // console.log(listaindex2)
         // console.log(botaoclicado2)
-        console.log(listaLS)
+        // console.log(listaLS)        
 
     if ( listaindex2 == botaoclicado2 ){
         let divapagada2 = document.getElementById(listaindex2)
@@ -69,15 +71,26 @@ onload = function atualizar1 (){
         listaLS.splice(listaindex2, 1 , null)
         // console.log(listaLS)
 
-        let salvalista = JSON.stringify(listaLS)
-        localStorage.setItem("buscarlista", salvalista)
+        let salvalista2 = JSON.stringify(listaLS)
+        localStorage.setItem("buscarlista", salvalista2)
 
-        arraybotaoclicado.push(botaoclicado2)
-        let salvabotaoclicado2 = JSON.stringify(arraybotaoclicado)
+        var getbotaoclicado = localStorage.getItem("buscarbotaoclicado")
+        var botaoclicadoLS = JSON.parse(getbotaoclicado) 
+        botaoclicadoLS.push(botaoclicado2)
+        let salvabotaoclicado2 = JSON.stringify(botaoclicadoLS)
         localStorage.setItem("buscarbotaoclicado", salvabotaoclicado2)
+
+        // console.log(listaLS)
+        // console.log(salvabotaoclicado2)
 
         }
 
+         // faz com que as divs que foram apagadas anteriormente não apareçam
+         for ( let i = 0; i < botaoclicadocarregado.length; i++){                //PROBLEMA COM O 0. ESTA APAGANDO A 1 DIV CARREGADA
+            let divapagada = document.getElementById(botaoclicadocarregado[i])         
+            lista.removeChild(divapagada)
+        }
+        
 
     }
                  //////////////////////FAZER BOTAO DE APAGAR FUNCIONAR///////////////////////////////////
@@ -130,7 +143,7 @@ document.getElementById("botaocriar").addEventListener("click", function(){
             // console.log(listatarefas[botaoclicado]) // pega a string clicada
             var listaindex = listatarefas.indexOf(listatarefas[botaoclicado]) // pega o index da string clicada            
 
-            console.log(listaindex)
+            // console.log(listaindex)
             // console.log(botaoclicado)
 
             if(listaindex == botaoclicado){
@@ -149,8 +162,7 @@ document.getElementById("botaocriar").addEventListener("click", function(){
                 var salvalista = JSON.stringify(listatarefas)
                 localStorage.setItem("buscarlista", salvalista)
 
-                // salva botões clicados para excluir as divs que foram clicadas na função onload
-                
+                // salva botões clicados para excluir as divs que foram clicadas na função onload                
                 arraybotaoclicado.push(botaoclicado)
                 // console.log(arraybotaoclicado)
                 var salvabotaoclicado = JSON.stringify(arraybotaoclicado)
