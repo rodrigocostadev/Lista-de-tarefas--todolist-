@@ -18,11 +18,17 @@ onload = function atualizar1 (){
         var div = document.createElement("div")
         let apagar = document.createElement("button")
         let editar = document.createElement("button")
+        let tarefainput = document.createElement("input")
 
-        div.textContent = listaLS[i]
+        // div.textContent = listaLS[i]
         div.setAttribute("id", [i])
         div.setAttribute("class", "elementos")
         lista.append(div)
+
+        tarefainput.value = listaLS[i]
+        tarefainput.setAttribute("id", [i])
+        tarefainput.setAttribute("class", "tarefainput")
+        div.append(tarefainput)
 
         editar.textContent = "Editar"
         editar.setAttribute("class", "editar")
@@ -110,12 +116,18 @@ document.getElementById("botaocriar").addEventListener("click", function(){
 
     let apagar = document.createElement("button")
     let editar = document.createElement("button")
+    let tarefainput = document.createElement("input")
     
-        div.textContent = textoinp.value
+        // div.textContent = textoinp.value
 
     if(textoinp.value != ""){
 
         lista.append(div)
+
+        tarefainput.value = textoinp.value
+        tarefainput.setAttribute("class", "tarefainput")
+        tarefainput.setAttribute("readonly","readonly")
+        div.append(tarefainput)
 
         editar.textContent = "Editar"
         editar.setAttribute("class", "editar")
@@ -130,30 +142,52 @@ document.getElementById("botaocriar").addEventListener("click", function(){
         for( let i = 0; i < listatarefas.length; i++){           
             div.setAttribute("id", [i])
             div.setAttribute("class", "elementos")
+            tarefainput.setAttribute("id",[i])
             apagar.setAttribute("id", [i])
             editar.setAttribute("id", [i])
         }
 
-        // let classeditar = document.querySelectorAll(".editar") //pega todos os botões apagar
-        // classeditar.forEach(function(e){ // faz um for em todos os botoes apagar
-        //     e.addEventListener("click", functioneditar ) // adiciona o evento click em todos os botoes apagar
-        // })
+        let classeditar = document.querySelectorAll(".editar") //pega todos os botões apagar
+        classeditar.forEach(function(e){ // faz um for em todos os botoes apagar
+            e.addEventListener("click", functioneditar ) // adiciona o evento click em todos os botoes apagar
+        })
 
-        // function functioneditar(evento){
-        //     let botaoclicado = evento.target.id
+        function functioneditar(evento){
+            let botaoclicado = evento.target.id
 
-        //     // console.log(listatarefas[botaoclicado]) // pega a string clicada
-        //     let listaindex = listatarefas.indexOf(listatarefas[botaoclicado]) // pega o index da string
+            // console.log(listatarefas[botaoclicado]) // pega a string clicada
+            let listaindex = listatarefas.indexOf(listatarefas[botaoclicado]) // pega o index da string
+            // let diveditada = document.getElementById(listaindex)
+            let classtarefainput = document.querySelectorAll(".tarefainput")
+            // let classtarefainputselecionada = classtarefainput.id[listaindex]
 
-        //     console.log(botaoclicado)
+            console.log(classtarefainput.id[listaindex])    ///////CONTINUA DAQUI
 
-        //     if( listaindex == botaoclicado){
+            // console.log(botaoclicado)
 
-        //         let diveditada = document.getElementById(listaindex)
+            // if( listaindex == botaoclicado){
 
+            //     // let diveditada = document.getElementById(listaindex)
+            //     let inputeditado = document.get                
+            // }
+
+            // if (botaoclicado == diveditada ){
+                // let classtarefainput = document.querySelectorAll(".tarefainput")
+                // let classtarefainput = document.getElementById(listaindex)
                 
-        //     }
-        // }
+                // classtarefainput = id[listaindex]
+                // let tarefainputselecionada = classtarefainput
+                // console.log(classtarefainputselecionada)
+
+                // let tarefainputselecionada = classtarefainput.id[listaindex]
+                // console.log(tarefainputselecionada)
+                // console.log(classtarefainput)
+                // tarefainputselecionada.innerHTMl = ""
+
+                // let classtarefainput 
+
+            // }
+        }
 
         
         let classapagar = document.querySelectorAll(".apagar") //pega todos os botões apagar
@@ -215,5 +249,6 @@ document.getElementById("limpartudo").addEventListener("click",function(){
     let lista = document.getElementById("listaelementos")
     localStorage.removeItem("buscarlista")
     lista.textContent = ''
+    document.location.reload(true) // atualiza a pagina para nao misturar novos arrays com antigos
 })
 
