@@ -9,7 +9,7 @@ onload = function atualizar1 (){
     var listaLS = JSON.parse(getlista)
     let lista = document.getElementById("listaelementos")
     // console.log(getlista)
-    // console.log(listaLS)
+    console.log(listaLS)
     // console.log(listaLS.length)
 
     /////Adicionando atributos com For/////
@@ -93,11 +93,14 @@ onload = function atualizar1 (){
         
 
     }
-                 //////////////////////FAZER BOTAO DE APAGAR FUNCIONAR///////////////////////////////////
+
 }
 
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 //Botão criar + Adicionar atributos de acordo com o indice de cada array
 document.getElementById("botaocriar").addEventListener("click", function(){
@@ -131,6 +134,27 @@ document.getElementById("botaocriar").addEventListener("click", function(){
             editar.setAttribute("id", [i])
         }
 
+        // let classeditar = document.querySelectorAll(".editar") //pega todos os botões apagar
+        // classeditar.forEach(function(e){ // faz um for em todos os botoes apagar
+        //     e.addEventListener("click", functioneditar ) // adiciona o evento click em todos os botoes apagar
+        // })
+
+        // function functioneditar(evento){
+        //     let botaoclicado = evento.target.id
+
+        //     // console.log(listatarefas[botaoclicado]) // pega a string clicada
+        //     let listaindex = listatarefas.indexOf(listatarefas[botaoclicado]) // pega o index da string
+
+        //     console.log(botaoclicado)
+
+        //     if( listaindex == botaoclicado){
+
+        //         let diveditada = document.getElementById(listaindex)
+
+                
+        //     }
+        // }
+
         
         let classapagar = document.querySelectorAll(".apagar") //pega todos os botões apagar
         classapagar.forEach(function(e){ // faz um for em todos os botoes apagar
@@ -144,14 +168,12 @@ document.getElementById("botaocriar").addEventListener("click", function(){
             var listaindex = listatarefas.indexOf(listatarefas[botaoclicado]) // pega o index da string clicada            
 
             // console.log(listaindex)
-            // console.log(botaoclicado)
+            console.log(botaoclicado)
 
             if(listaindex == botaoclicado){
 
-                let divapagada = document.getElementById(listaindex)
-                
+                let divapagada = document.getElementById(listaindex)                
                 let lista = document.querySelector("#listaelementos")
-
                 lista.removeChild(divapagada)
                 
                 // remove a string do array, 
@@ -170,20 +192,18 @@ document.getElementById("botaocriar").addEventListener("click", function(){
 
                 // console.log(listatarefas)
                 // console.log(listaindex)
+                
             }
-            
-
-            
-            
-            // criar função de atualizar index de arrays para null
             
         }
 
+        
+
+        console.log(listatarefas)
         var salvalista = JSON.stringify(listatarefas)
         localStorage.setItem("buscarlista", salvalista)
 
-        textoinp.value = ""   
-
+        textoinp.value = ""  
         textoinp.focus()
     }
 
