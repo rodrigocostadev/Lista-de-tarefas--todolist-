@@ -1,112 +1,11 @@
 var listatarefas = [];
 var arraybotaoclicado = [];
+let checkbotaoclicado = null
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//////////////Carregar tarefas criadas de pagina que foi fechada com função onload///////////////////////////////////
-onload = function atualizar1 (){
-    //Local storage para carregar da memoria a pagina fechada e adicionar atributos de acordo com o indice do array//
-    var getlista = localStorage.getItem("buscarlista")
-    var listaLS = JSON.parse(getlista)
-    let lista = document.getElementById("listaelementos")
-    // console.log(getlista)
-    console.log(listaLS)
-    // console.log(listaLS.length)
-
-    /////Adicionando atributos com For/////
-    for ( let i = 0; i < listaLS.length; i++){
-        // console.log(listaLS[i])
-        var div = document.createElement("div")
-        let apagar = document.createElement("button")
-        let editar = document.createElement("button")
-        let tarefainput = document.createElement("input")
-
-        // div.textContent = listaLS[i]
-        div.setAttribute("id", [i])
-        div.setAttribute("class", "elementos")
-        lista.append(div)
-
-        tarefainput.value = listaLS[i]
-        tarefainput.setAttribute("id", [i])
-        tarefainput.setAttribute("class", "tarefainput")
-        div.append(tarefainput)
-
-        editar.textContent = "Editar"
-        editar.setAttribute("class", "editar")
-        editar.setAttribute("id", [i])
-        div.append(editar)
-
-        apagar.textContent = "Apagar"
-        apagar.setAttribute("class", "apagar")
-        apagar.setAttribute("id", [i])
-        div.append(apagar)                
-    }
-
-    var getbotaoclicado = localStorage.getItem("buscarbotaoclicado")
-    var botaoclicadoLS = JSON.parse(getbotaoclicado) 
-    let botaoclicadocarregado = botaoclicadoLS       
-
-    // console.log(listaindex)
-    // console.log(botaoclicadocarregado)
-
-    // faz com que as divs que foram apagadas anteriormente não apareçam
-    for ( let i = 0; i < botaoclicadocarregado.length; i++){                //PROBLEMA COM O 0. ESTA APAGANDO A 1 DIV CARREGADA
-        let divapagada = document.getElementById(botaoclicadocarregado[i])         
-        lista.removeChild(divapagada)
-    }
-
-    let classapagar = document.querySelectorAll(".apagar")
-    classapagar.forEach(function(ev){
-        ev.addEventListener("click", fuctionapagar2)
-    })
-
-
-    /////////////////////////////////////////////////////////////////////////////////////////////
-    function fuctionapagar2 (evento2) {
-
-        let botaoclicado2 = evento2.target.id
-        let listaindex2 = listaLS.indexOf(listaLS[botaoclicado2])
-        // console.log(listaindex2)
-        // console.log(botaoclicado2)
-        // console.log(listaLS)        
-
-    if ( listaindex2 == botaoclicado2 ){
-        let divapagada2 = document.getElementById(listaindex2)
-        let lista = document.querySelector("#listaelementos")
-
-        lista.removeChild(divapagada2)
-        listaLS.splice(listaindex2, 1 , null)
-        // console.log(listaLS)
-
-        let salvalista2 = JSON.stringify(listaLS)
-        localStorage.setItem("buscarlista", salvalista2)
-
-        var getbotaoclicado = localStorage.getItem("buscarbotaoclicado")
-        var botaoclicadoLS = JSON.parse(getbotaoclicado) 
-        botaoclicadoLS.push(botaoclicado2)
-        let salvabotaoclicado2 = JSON.stringify(botaoclicadoLS)
-        localStorage.setItem("buscarbotaoclicado", salvabotaoclicado2)
-
-        // console.log(listaLS)
-        // console.log(salvabotaoclicado2)
-
-        }
-
-         // faz com que as divs que foram apagadas anteriormente não apareçam
-         for ( let i = 0; i < botaoclicadocarregado.length; i++){                //PROBLEMA COM O 0. ESTA APAGANDO A 1 DIV CARREGADA
-            let divapagada = document.getElementById(botaoclicadocarregado[i])         
-            lista.removeChild(divapagada)
-        }
-        
-
-    }
-
-}
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+////////////////////////////////////////////////// BOTÃO CRIAR ///////////////////////////////////////////////////////////
 
 //Botão criar + Adicionar atributos de acordo com o indice de cada array
 document.getElementById("botaocriar").addEventListener("click", function(){
@@ -146,6 +45,12 @@ document.getElementById("botaocriar").addEventListener("click", function(){
             apagar.setAttribute("id", [i])
             editar.setAttribute("id", [i])
         }
+        
+        console.log(listatarefas)
+        var salvalista = JSON.stringify(listatarefas)
+        localStorage.setItem("buscarlista", salvalista)
+
+        ///////////////////////////////////////////////// EDITAR //////////////////////////////////////////////////////////
 
         let classeditar = document.querySelectorAll(".editar") //pega todos os botões apagar
         classeditar.forEach(function(e){ // faz um for em todos os botoes apagar
@@ -158,36 +63,42 @@ document.getElementById("botaocriar").addEventListener("click", function(){
             // console.log(listatarefas[botaoclicado]) // pega a string clicada
             let listaindex = listatarefas.indexOf(listatarefas[botaoclicado]) // pega o index da string
             // let diveditada = document.getElementById(listaindex)
-            let classtarefainput = document.querySelectorAll(".tarefainput")
-            // let classtarefainputselecionada = classtarefainput.id[listaindex]
+            var classtarefainput = document.getElementsByClassName("tarefainput")[botaoclicado]            
+            // console.log(classtarefainput)
 
-            console.log(classtarefainput.id[listaindex])    ///////CONTINUA DAQUI
+            if( listaindex == botaoclicado){
 
-            // console.log(botaoclicado)
+                classtarefainput.removeAttribute("readonly")
+                // classtarefainput.value = ""
+                classtarefainput.focus()
+                classtarefainput.style.color = 'red'
 
-            // if( listaindex == botaoclicado){
+                    //onblur para adicionar tarefa quando clicar fora do input
+                    classtarefainput.onblur = function (){
+                        classtarefainput.style.color = 'yellow'
+                        listatarefas.splice(listaindex, 1, classtarefainput.value)
+                        var salvalista = JSON.stringify(listatarefas)
+                        localStorage.setItem("buscarlista", salvalista)
+                        classtarefainput.setAttribute("readonly", "readonly")
+                        // console.log(classtarefainput.value) 
+                        console.log(listatarefas)                         
+                    }
 
-            //     // let diveditada = document.getElementById(listaindex)
-            //     let inputeditado = document.get                
-            // }
-
-            // if (botaoclicado == diveditada ){
-                // let classtarefainput = document.querySelectorAll(".tarefainput")
-                // let classtarefainput = document.getElementById(listaindex)
-                
-                // classtarefainput = id[listaindex]
-                // let tarefainputselecionada = classtarefainput
-                // console.log(classtarefainputselecionada)
-
-                // let tarefainputselecionada = classtarefainput.id[listaindex]
-                // console.log(tarefainputselecionada)
-                // console.log(classtarefainput)
-                // tarefainputselecionada.innerHTMl = ""
-
-                // let classtarefainput 
-
-            // }
+                    //onchange para adicionar tarefa quando mudar o valor do input, ou apertar enter ou tab
+                    classtarefainput.onchange = function (){
+                        classtarefainput.style.color = 'yellow'
+                        listatarefas.splice(listaindex, 1, classtarefainput.value)
+                        var salvalista = JSON.stringify(listatarefas)
+                        localStorage.setItem("buscarlista", salvalista)
+                        classtarefainput.setAttribute("readonly", "readonly")
+                        // console.log(classtarefainput.value) 
+                        console.log(listatarefas)                         
+                    }
+                }                   
         }
+
+        
+        ////////////////////////////////////////////////////// APAGAR /////////////////////////////////////////////////////
 
         
         let classapagar = document.querySelectorAll(".apagar") //pega todos os botões apagar
@@ -224,18 +135,13 @@ document.getElementById("botaocriar").addEventListener("click", function(){
                 var salvabotaoclicado = JSON.stringify(arraybotaoclicado)
                 localStorage.setItem("buscarbotaoclicado", salvabotaoclicado)
 
-                // console.log(listatarefas)
-                // console.log(listaindex)
+                // essa variavel vai fazer com que as divs que foram apagadas anteriormente não apareçam
+                let checkbotaoclicado = 1
+                localStorage.setItem("check", checkbotaoclicado)
                 
             }
             
-        }
-
-        
-
-        console.log(listatarefas)
-        var salvalista = JSON.stringify(listatarefas)
-        localStorage.setItem("buscarlista", salvalista)
+        }        
 
         textoinp.value = ""  
         textoinp.focus()
@@ -243,12 +149,287 @@ document.getElementById("botaocriar").addEventListener("click", function(){
 
 })
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////// BOTÃO LIMPAR TUDO //////////////////////////////////////////////////////////////
 
 document.getElementById("limpartudo").addEventListener("click",function(){
     let lista = document.getElementById("listaelementos")
     localStorage.removeItem("buscarlista")
     lista.textContent = ''
     document.location.reload(true) // atualiza a pagina para nao misturar novos arrays com antigos
+    localStorage.removeItem("buscarbotaoclicado")
 })
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////// ATUALIZAR PAGINA ///////////////////////////////////////////////////////
+////////////// Com função onload, recarregar tarefas criadas ( da pagina que foi fechada anteriormente ) /////////////////
+onload = function atualizar (){
+    //Local storage para carregar da memoria a pagina fechada e adicionar atributos de acordo com o indice do array//
+    var getlista = localStorage.getItem("buscarlista")
+    var listaLS = JSON.parse(getlista)
+    let lista = document.getElementById("listaelementos")
+    // console.log(getlista)
+    console.log(listaLS)
+
+    /////Adicionando atributos com For/////
+    for ( let i = 0; i < listaLS.length; i++){
+        // console.log(listaLS[i])
+        var div = document.createElement("div")
+        let apagar = document.createElement("button")
+        let editar = document.createElement("button")
+        let tarefainput = document.createElement("input")
+
+        // div.textContent = listaLS[i]
+        div.setAttribute("id", [i])
+        div.setAttribute("class", "elementos")
+        lista.append(div)
+
+        tarefainput.value = listaLS[i]
+        tarefainput.setAttribute("id", [i])
+        tarefainput.setAttribute("class", "tarefainput")
+        tarefainput.setAttribute("readonly","readonly")
+        div.append(tarefainput)
+
+        editar.textContent = "Editar"
+        editar.setAttribute("class", "editar")
+        editar.setAttribute("id", [i])
+        div.append(editar)
+
+        apagar.textContent = "Apagar"
+        apagar.setAttribute("class", "apagar")
+        apagar.setAttribute("id", [i])
+        div.append(apagar)                
+    }
+
+    var getbotaoclicado = localStorage.getItem("buscarbotaoclicado")
+    var botaoclicadoLS = JSON.parse(getbotaoclicado) 
+    let botaoclicadocarregado = botaoclicadoLS  
+    let checkbotaoclicado = localStorage.getItem("check")     
+    let check = JSON.parse(checkbotaoclicado)
+
+    // console.log(listaindex)
+    // console.log(botaoclicadocarregado)
+    // console.log(check + " teste variavel check ")
+
+    // const nullmapeado = listaLS.filter( null => )
+
+    let array = ["0", null , "10", "8", null, null]
+    let arrayDeNull = []
+
+    // array.forEach(( element) => {
+    //     if (element === null){
+    //         arrayDeNull.push(element)
+    //     }
+    // })
+
+    // let listaindex = listaLS.indexOf(listaLS[botaoclicado]) //// CONTINUA DAQUIIIIII
+
+    for( let i = 0; i < array.length; i++){
+        if (array.length == null){
+            return array.indexOf[i]
+        }
+    }
+
+    console.log( arrayDeNull + " esse é array de null")
+
+    // function pegarArrayNull (){
+    //     return array.indexof(null)
+    // }
+
+    // var roots = array.map(pegarArrayNull)
+    // console.log(roots + " esse é o roots")
+
+    // let arrayIgualaNull = listaLS.filter(pegarArrayNull)
+    // console.log(arrayIgualaNull)
+
+    // console.log(botaoclicadocarregado + " esse é o botao clicado carregado")
+
+    // if (check == 1 && botaoclicadocarregado != null){
+
+    //     // if (botaoclicadocarregado != null){
+    //         // faz com que as divs que foram apagadas anteriormente não apareçam
+    //         for ( let i = 0; i < botaoclicadocarregado.length; i++){                
+    //             let divapagada = document.getElementById(botaoclicadocarregado[i]) 
+                    
+    //                 // if ( divapagada == null){        
+    //                         lista.removeChild(divapagada)
+    //                 // }
+    //         }
+    //         check = null
+    //         localStorage.setItem("check", checkbotaoclicado)
+    //     // }
+    // }
+
+    if (check == 1){
+
+        // faz com que as divs que foram apagadas anteriormente não apareçam
+        for ( let i = 0; i < botaoclicadocarregado.length; i++){                
+            let divapagada = document.getElementById(botaoclicadocarregado[i]) 
+
+            // console.log(botaoclicadocarregado)
+
+                // if ( listaLS.length[i] == null){        
+                        lista.removeChild(divapagada)
+                        // divapagada.style.display = "none"
+                // }
+        }
+        check = null
+    }
+
+    ///////////////////////////////////////////////// BOTÃO EDITAR  //////////////////////////////////////////////////////
+
+    let classeditar = document.querySelectorAll(".editar") //pega todos os botões apagar
+        classeditar.forEach(function(e){ // faz um for em todos os botoes apagar
+            e.addEventListener("click", functioneditar ) // adiciona o evento click em todos os botoes apagar
+        })
+
+        function functioneditar(evento){
+            let botaoclicado = evento.target.id
+            console.log(botaoclicado)
+            // var listaLS = JSON.parse(getlista)
+            // console.log(listaLS[botaoclicado]) // pega a string clicada
+            let listaindex = listaLS.indexOf(listaLS[botaoclicado]) // pega o index da string
+            // let diveditada = document.getElementById(listaindex)
+            var classtarefainput = document.getElementsByClassName("tarefainput")[botaoclicado]            
+            console.log(classtarefainput)
+
+            if( listaindex == botaoclicado){
+                
+                classtarefainput.removeAttribute("readonly")
+                // classtarefainput.value = ""
+                classtarefainput.focus()
+                classtarefainput.style.color = 'red'
+                
+
+                    //onblur para adicionar tarefa quando clicar fora do input
+                    classtarefainput.onblur = function (){
+                        classtarefainput.style.color = 'yellow'
+                        listaLS.splice(listaindex, 1, classtarefainput.value)
+                        var salvalista = JSON.stringify(listaLS)
+                        localStorage.setItem("buscarlista", salvalista)
+                        classtarefainput.setAttribute("readonly", "readonly")
+                        // console.log(classtarefainput.value) 
+                        console.log(listaLS)                         
+                    }
+
+                    //onchange para adicionar tarefa quando mudar o valor do input, ou apertar enter ou tab
+                    classtarefainput.onchange = function (){
+                        classtarefainput.style.color = 'yellow'
+                        listaLS.splice(listaindex, 1, classtarefainput.value)
+                        var salvalista = JSON.stringify(listaLS)
+                        localStorage.setItem("buscarlista", salvalista)
+                        classtarefainput.setAttribute("readonly", "readonly")
+                        // console.log(classtarefainput.value) 
+                        console.log(listaLS)                         
+                    }
+                }                   
+        }
+
+
+    ///////////////////////////////////////////////// BOTÃO APAGAR  //////////////////////////////////////////////////////
+
+    let classapagar = document.querySelectorAll(".apagar")
+    classapagar.forEach(function(e){
+        e.addEventListener("click", fuctionapagar2)
+    })
+
+    function fuctionapagar2 (evento) {
+
+        let botaoclicado = evento.target.id
+        let listaindex = listaLS.indexOf(listaLS[botaoclicado])
+        // console.log(listaindex)
+        // console.log(botaoclicado)
+        // console.log(listaLS)        
+
+    if ( listaindex == botaoclicado ){
+        let divapagada = document.getElementById(listaindex)
+        let lista = document.querySelector("#listaelementos")
+
+        lista.removeChild(divapagada)
+        listaLS.splice(listaindex, 1 , null)
+        // console.log(listaLS)
+
+        let salvalista = JSON.stringify(listaLS)
+        localStorage.setItem("buscarlista", salvalista)
+
+        var getbotaoclicado = localStorage.getItem("buscarbotaoclicado")
+        var botaoclicadoLS = JSON.parse(getbotaoclicado) 
+        botaoclicadoLS.push(botaoclicado)
+        let salvabotaoclicado = JSON.stringify(botaoclicadoLS)
+        localStorage.setItem("buscarbotaoclicado", salvabotaoclicado)
+
+        // let check = 1
+        // localStorage.setItem("check", check)        
+
+        // console.log(listaLS)
+        // console.log(salvabotaoclicado)
+
+        }
+
+        // if( check == 1){
+
+            // faz com que as divs que foram apagadas anteriormente não apareçam
+            // for ( let i = 0; i < botaoclicadocarregado.length; i++){                
+            //     let divapagada = document.getElementById(botaoclicadocarregado[i])         
+            //     lista.removeChild(divapagada)
+            // }
+
+        //     check = null
+        // }
+
+        
+        
+
+    }
+
+    // var getbotaoclicado = localStorage.getItem("buscarbotaoclicado")
+    // var botaoclicadoLS = JSON.parse(getbotaoclicado) 
+    // let botaoclicadocarregado = botaoclicadoLS  
+    // let checkbotaoclicado = localStorage.getItem("check")     
+    // let check = JSON.parse(checkbotaoclicado)
+
+
+    // if (check == 1){
+
+    //     // faz com que as divs que foram apagadas anteriormente não apareçam
+    //         for ( let i = 0; i < botaoclicadocarregado.length; i++){                
+    //         let divapagada = document.getElementById(botaoclicadocarregado[i])         
+    //         lista.removeChild(divapagada)
+    //     }
+    //     check = null
+    // }
+
+    // console.log(botaoclicadocarregado + " esse é o botao clicado carregado")
+
+    // if (check == 1 && botaoclicadocarregado != null){
+
+    //     // if (botaoclicadocarregado != null){
+    //         // faz com que as divs que foram apagadas anteriormente não apareçam
+    //         for ( let i = 0; i < botaoclicadocarregado.length; i++){                
+    //             let divapagada = document.getElementById(botaoclicadocarregado[i]) 
+                    
+    //                 // if ( divapagada == null){        
+    //                         lista.removeChild(divapagada)
+    //                 // }
+    //         }
+    //         check = null
+    //         localStorage.setItem("check", checkbotaoclicado)
+    //     // }
+    // }
+
+}
+
+
+
+
+
+
+
 
