@@ -4,6 +4,7 @@ body{
     background-image: url(assets/climbing-to-the-top-g2c84fa7d9_1920.jpg);
     /* background-image: url(/assets/keyboard-g01fba25ed_1920.jpg); */
     background-size: cover;
+    /* background-size: contain; */
     background-repeat: no-repeat;
 }
 h1{
@@ -96,10 +97,54 @@ h3{
 }
 
 
+@media (max-width: 1450px){
+    body{
+        background-size: 115%;
+    }
+}
+@media (max-width: 1100px){
+    body{
+        background-size: 160%;
+    }
+}
 @media (max-width: 850px){
+    body{
+        background-size: 220%;
+    }
     #input{
         width: 350px;
     }
 }
-
+@media (max-width: 670px){
+    body{
+        background-size: 400%;
+        background-position-x: 10%;
+        background-position-y: top;
+    }
+    #input{
+        width: 200px;
+        margin-right: 2px;
+    }
+    .botoesprincipais{
+        margin-right: 2px;
+        width: 93px;
+        height: 30px;
+    }
+}
+/* @media (max-width: 430px){
+    body{
+        background-size: 400%;
+        background-position-x: 10%;
+        background-position-y: top;
+    }
+    #input{
+        width: 200px;
+        margin-right: 2px;
+    }
+    .botoesprincipais{
+        margin-right: 2px;
+        width: 93px;
+        height: 30px;
+    }
+} */
 
