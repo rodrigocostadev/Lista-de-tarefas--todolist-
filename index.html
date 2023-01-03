@@ -5,16 +5,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Gluten:wght@300&family=Metal+Mania&family=Nunito+Sans&family=Play:wght@400;700&family=Playball&display=swap" rel="stylesheet">
     <title>Document</title>
 </head>
 <body>
+    
+    <h1>Minhas Metas</h1>
+    <h3>Lista de Tarefas / (To-do list)</h3>
 
-    <h1>Lista de Tarefas</h1>
-    <h3>(to-do list)</h3>
-
-    <input id="input" type="text">
-    <button id="botaocriar" >Criar Tarefa</button>
-    <button id="limpartudo" >Limpar tudo</button>
+    <div class="box">
+        <input id="input" type="text" placeholder="Defina aqui suas Metas/Tarefas">
+        <!-- <button id="botaocriar" class="botoesprincipais" >Criar Tarefa</button> -->
+        <button id="botaocriar" class="botoesprincipais" >
+            <!-- <img src="assets/adicionar.png" alt="adicionar" width="25px" style="background-color: red;"> -->
+            Criar Tarefa
+        </button>
+        <button id="limpartudo" class="botoesprincipais" >Limpar Tudo</button>
+    </div>
 
     <div id="listacompleta" >
         <div id="listaelementos" ></div>

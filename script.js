@@ -16,6 +16,11 @@ document.getElementById("botaocriar").addEventListener("click", function(){
     let apagar = document.createElement("button")
     let editar = document.createElement("button")
     let tarefainput = document.createElement("input")
+    // let imageeditar = document.createElement("img")
+    // imageeditar.src = "assets/editar.png"
+    // imageeditar.style.width = "20px"
+    // imageeditar.style.height = "20px"
+    // imageeditar.style.backgroundColor = "red"
     
         // div.textContent = textoinp.value
 
@@ -29,8 +34,10 @@ document.getElementById("botaocriar").addEventListener("click", function(){
         div.append(tarefainput)
 
         editar.textContent = "Editar"
+        // editar.value = imageeditar.value
         editar.setAttribute("class", "editar")
         div.append(editar)
+        // editar.append(imageeditar)
 
         apagar.textContent = "Apagar"
         apagar.setAttribute("class", "apagar")
@@ -38,10 +45,13 @@ document.getElementById("botaocriar").addEventListener("click", function(){
         
         listatarefas.push(textoinp.value)
 
+
         for( let i = 0; i < listatarefas.length; i++){           
             div.setAttribute("id", [i])
             div.setAttribute("class", "elementos")
             tarefainput.setAttribute("id",[i])
+            tarefainput.setAttribute("data", [i])
+            // tarefainput.value = ([i])
             apagar.setAttribute("id", [i])
             editar.setAttribute("id", [i])
         }
@@ -63,38 +73,56 @@ document.getElementById("botaocriar").addEventListener("click", function(){
             // console.log(listatarefas[botaoclicado]) // pega a string clicada
             let listaindex = listatarefas.indexOf(listatarefas[botaoclicado]) // pega o index da string
             // let diveditada = document.getElementById(listaindex)
-            var classtarefainput = document.getElementsByClassName("tarefainput")[botaoclicado]            
-            // console.log(classtarefainput)
+            // let diveditada = document.getElementById(botaoclicado)
+            // let classtarefainput = document.getAttribute("data")[botaoclicado]
+            var classtarefainput = document.getElementsByClassName("tarefainput")[botaoclicado] 
+            // let classtarefainput = document.getElementsByClassName("tarefainput")  
+            let aa = classtarefainput.getAttribute("id", botaoclicado)
+            // let classtarefainput = document.querySelectorAll(".tarefainput")[botaoclicado]
+            // classtarefainput.getElementById(botaoclicado)
+            // classtarefainput = botaoclicado
+            console.log(aa + "pp")      
+            // console.log(diveditada.id)
+            // console.log(classtarefainput.id[botaoclicado])
+            // console.log(botaoclicado)
 
-            if( listaindex == botaoclicado){
+            if( classtarefainput.id == botaoclicado){
 
                 classtarefainput.removeAttribute("readonly")
+                    // classtarefainput.onfocus = function() {
+                    //     classtarefainput.style.backgroundColor = "gold"
+                    // } 
                 // classtarefainput.value = ""
                 classtarefainput.focus()
                 classtarefainput.style.color = 'red'
 
-                    //onblur para adicionar tarefa quando clicar fora do input
-                    classtarefainput.onblur = function (){
-                        classtarefainput.style.color = 'yellow'
-                        listatarefas.splice(listaindex, 1, classtarefainput.value)
-                        var salvalista = JSON.stringify(listatarefas)
-                        localStorage.setItem("buscarlista", salvalista)
-                        classtarefainput.setAttribute("readonly", "readonly")
-                        // console.log(classtarefainput.value) 
-                        console.log(listatarefas)                         
-                    }
+                    
 
-                    //onchange para adicionar tarefa quando mudar o valor do input, ou apertar enter ou tab
-                    classtarefainput.onchange = function (){
-                        classtarefainput.style.color = 'yellow'
-                        listatarefas.splice(listaindex, 1, classtarefainput.value)
-                        var salvalista = JSON.stringify(listatarefas)
-                        localStorage.setItem("buscarlista", salvalista)
-                        classtarefainput.setAttribute("readonly", "readonly")
-                        // console.log(classtarefainput.value) 
-                        console.log(listatarefas)                         
-                    }
-                }                   
+                //onblur para adicionar tarefa quando clicar fora do input
+                classtarefainput.onblur = function (){
+                    classtarefainput.style.color = 'green'
+                    // classtarefainput.style.backgroundColor = "none"
+                    listatarefas.splice(listaindex, 1, classtarefainput.value)
+                    var salvalista = JSON.stringify(listatarefas)
+                    localStorage.setItem("buscarlista", salvalista)
+                    classtarefainput.setAttribute("readonly", "readonly")
+                    // console.log(classtarefainput.value) 
+                    console.log(listatarefas)                         
+                }
+
+                //onchange para adicionar tarefa quando mudar o valor do input, ou apertar enter ou tab
+                classtarefainput.onchange = function (){
+                    classtarefainput.style.color = 'green'
+                    // classtarefainput.style.backgroundColor = "none"
+                    listatarefas.splice(listaindex, 1, classtarefainput.value)
+                    var salvalista = JSON.stringify(listatarefas)
+                    localStorage.setItem("buscarlista", salvalista)
+                    classtarefainput.setAttribute("readonly", "readonly")
+                    // console.log(classtarefainput.value) 
+                    console.log(listatarefas)                         
+                }                  
+                    
+            }                 
         }
 
         
@@ -108,22 +136,29 @@ document.getElementById("botaocriar").addEventListener("click", function(){
 
         function functionapagar (evento){
             var botaoclicado = evento.target.id
+            // let divapagada = document.getElementById(listaindex)
+            // console.log(botaoclicado)
+            // console.log(divapagada)
 
             // console.log(listatarefas[botaoclicado]) // pega a string clicada
             var listaindex = listatarefas.indexOf(listatarefas[botaoclicado]) // pega o index da string clicada            
+            // let divapagada = document.getElementById(listaindex)
+            let divapagada = document.getElementById(botaoclicado)
 
+            // console.log(divapagada.id)
             // console.log(listaindex)
             console.log(botaoclicado)
 
-            if(listaindex == botaoclicado){
+            if(divapagada.id == botaoclicado){
 
-                let divapagada = document.getElementById(listaindex)                
+                // let divapagada = document.getElementById(listaindex)                
                 let lista = document.querySelector("#listaelementos")
                 lista.removeChild(divapagada)
                 
                 // remove a string do array, 
                 //remove 1 elemento do índice da variavel listaindex, e adiciona null para nao perder a ordem do array
-                listatarefas.splice(listaindex, 1, null) 
+                // listatarefas.splice(listaindex, 1, null) 
+                listatarefas.splice(botaoclicado, 1, null) 
                 
                 //atualiza o array de acordo com as divs apagadas
                 var salvalista = JSON.stringify(listatarefas)
@@ -138,6 +173,8 @@ document.getElementById("botaocriar").addEventListener("click", function(){
                 // essa variavel vai fazer com que as divs que foram apagadas anteriormente não apareçam
                 let checkbotaoclicado = 1
                 localStorage.setItem("check", checkbotaoclicado)
+
+                console.log(listatarefas)
                 
             }
             
@@ -221,7 +258,14 @@ onload = function atualizar (){
     // const nullmapeado = listaLS.filter( null => )
 
     let array = ["0", null , "10", "8", null, null]
-    let arrayDeNull = []
+    // let arrayDeNull = []
+    let uniquearray = array.filter(checkarray)
+
+    function checkarray(element){
+        return element ==(null)
+    }
+
+    console.log(uniquearray + " esse é o uniquearray")
 
     // array.forEach(( element) => {
     //     if (element === null){
@@ -231,13 +275,13 @@ onload = function atualizar (){
 
     // let listaindex = listaLS.indexOf(listaLS[botaoclicado]) //// CONTINUA DAQUIIIIII
 
-    for( let i = 0; i < array.length; i++){
-        if (array.length == null){
-            return array.indexOf[i]
-        }
-    }
+    // for( let i = 0; i < array.length; i++){
+    //     if (array.length == null){
+    //         return array.indexOf[i]
+    //     }
+    // }
 
-    console.log( arrayDeNull + " esse é array de null")
+    // console.log( arrayDeNull + " esse é array de null")
 
     // function pegarArrayNull (){
     //     return array.indexof(null)
@@ -310,7 +354,7 @@ onload = function atualizar (){
 
                     //onblur para adicionar tarefa quando clicar fora do input
                     classtarefainput.onblur = function (){
-                        classtarefainput.style.color = 'yellow'
+                        classtarefainput.style.color = 'green'
                         listaLS.splice(listaindex, 1, classtarefainput.value)
                         var salvalista = JSON.stringify(listaLS)
                         localStorage.setItem("buscarlista", salvalista)
@@ -321,7 +365,7 @@ onload = function atualizar (){
 
                     //onchange para adicionar tarefa quando mudar o valor do input, ou apertar enter ou tab
                     classtarefainput.onchange = function (){
-                        classtarefainput.style.color = 'yellow'
+                        classtarefainput.style.color = 'green'
                         listaLS.splice(listaindex, 1, classtarefainput.value)
                         var salvalista = JSON.stringify(listaLS)
                         localStorage.setItem("buscarlista", salvalista)
